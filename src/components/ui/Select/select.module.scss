@@ -1,0 +1,17 @@
+@use "../../../scss/abstracts" as *;
+
+.select {
+    padding: rem(8px) rem(16px);
+    border: 1px solid $color-gray;
+    border-radius: 8px;
+    font-size: rem(16px);
+    width: 100%;
+    background-color: $color-light-gray;
+    color: $color-black;
+    cursor: pointer;
+
+    &:focus {
+        outline: none;
+        border-color: $color-dark-gray;
+    }
+}
