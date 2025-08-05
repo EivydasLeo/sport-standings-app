@@ -6,7 +6,6 @@ import { type ButtonProps } from "./Button.types";
 export const Button: React.FC<ButtonProps> = ({
     variant = "primary",
     size = "md",
-    fullWidth = false,
     icon,
     className,
     children,
@@ -14,13 +13,7 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
     return (
         <button
-            className={clsx(
-                styles.button,
-                styles[variant],
-                styles[size],
-                fullWidth && styles.fullWidth,
-                className,
-            )}
+            className={clsx(styles.button, styles[variant], styles[size], className)}
             {...props}
         >
             {icon && <span className={styles.icon}>{icon}</span>}

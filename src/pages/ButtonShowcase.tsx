@@ -12,8 +12,8 @@ export default function ButtonShowcase() {
             <Button variant="primary" size="md">
                 Primary MD
             </Button>
-            <Button variant="primary" size="lg" fullWidth>
-                Primary LG Full Width
+            <Button variant="primary" size="lg">
+                Primary LG
             </Button>
             <Button variant="secondary" size="md">
                 Secondary MD
@@ -28,6 +28,8 @@ export default function ButtonShowcase() {
             <Button variant="success" icon="+" size="md">
                 Add Player
             </Button>
+            <br />
+            <br />
             <Link to="/"> Back to homepage</Link>
         </div>
     );

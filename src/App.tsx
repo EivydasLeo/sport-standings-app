@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import ButtonShowcase from "./pages/ButtonShowcase";
+import InputShowcase from "./pages/InputShowcase";
 
 function App() {
     return (
@@ -14,11 +15,16 @@ function App() {
                                 <li>
                                     <Link to="/showcase/buttons">Button Showcase</Link>
                                 </li>
+                                <br />
+                                <li>
+                                    <Link to="/showcase/inputs">Input Showcase</Link>
+                                </li>
                             </ul>
                         </div>
                     }
                 />
                 <Route path="/showcase/buttons" element={<ButtonShowcase />} />
+                <Route path="/showcase/inputs" element={<InputShowcase />} />
             </Routes>
         </Router>
     );
