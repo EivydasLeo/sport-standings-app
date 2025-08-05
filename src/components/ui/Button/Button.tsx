@@ -7,6 +7,7 @@ export const Button: React.FC<ButtonProps> = ({
     variant = "primary",
     size = "md",
     fullWidth = false,
+    icon,
     className,
     children,
     ...props
@@ -22,7 +23,8 @@ export const Button: React.FC<ButtonProps> = ({
             )}
             {...props}
         >
-            {children}
+            {icon && <span className={styles.icon}>{icon}</span>}
+            {children && <span>{children}</span>}
         </button>
     );
 };

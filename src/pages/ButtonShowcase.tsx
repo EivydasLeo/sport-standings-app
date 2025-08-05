@@ -24,6 +24,10 @@ export default function ButtonShowcase() {
             <Button variant="success" size="md">
                 Success
             </Button>
+
+            <Button variant="success" icon="+" size="md">
+                Add Player
+            </Button>
             <Link to="/"> Back to homepage</Link>
         </div>
     );
