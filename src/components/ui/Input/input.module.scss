@@ -1,0 +1,32 @@
+@use "../../../scss/abstracts" as *;
+
+.label {
+    display: flex;
+    flex-direction: column;
+    gap: rem(4px);
+    font-size: rem(14px);
+    font-weight: 500;
+    color: $color-black;
+}
+
+.input {
+    padding: rem(10px) rem(12px);
+    font-size: rem(14px);
+    border: 1px solid $color-gray;
+    border-radius: rem(6px);
+    outline: none;
+    transition: border-color 0.2s ease;
+
+    &:focus {
+        border-color: $color-blue;
+    }
+}
+
+.error {
+    border-color: $color-red;
+}
+
+.errorMessage {
+    font-size: rem(12px);
+    color: $color-red;
+}
