@@ -1,0 +1,75 @@
+@use "../../../scss/abstracts" as *;
+
+.button {
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 rem(16px);
+
+    &:hover {
+        transform: translateY(-1px);
+    }
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.sm {
+    height: rem(32px);
+    font-size: rem(14px);
+}
+
+.md {
+    height: rem(40px);
+    font-size: rem(15px);
+}
+
+.lg {
+    height: rem(48px);
+    font-size: rem(16px);
+}
+
+.primary {
+    background-color: $color-blue;
+    color: $color-white;
+
+    &:hover {
+        background-color: $color-dark-blue;
+    }
+}
+
+.secondary {
+    background-color: $color-orange;
+    color: $color-white;
+
+    &:hover {
+        background-color: $color-dark-orange;
+    }
+}
+
+.accent {
+    background-color: $color-purple;
+    color: $color-white;
+
+    &:hover {
+        background-color: $color-dark-purple;
+    }
+}
+
+.success {
+    background-color: $color-green;
+    color: $color-white;
+
+    &:hover {
+        background-color: $color-dark-green;
+    }
+}
