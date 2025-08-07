@@ -1,0 +1,31 @@
+@use "../../scss/abstracts/" as *;
+
+.header {
+    display: flex;
+    align-items: center;
+    padding: rem(16px);
+    border-top-right-radius: rem(8px);
+    border-top-left-radius: rem(8px);
+    color: $color-white;
+}
+
+.icon {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.football {
+    background-color: $color-purple;
+    font-family: $font-modern-san-serif;
+}
+
+.basketball {
+    background-color: $color-dark-green;
+    font-family: $font-athletic-style;
+}
+
+.tennis {
+    background-color: $color-green;
+    font-family: $font-monospace;
+}
