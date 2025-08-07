@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import ButtonShowcase from "./pages/ButtonShowcase";
 import InputShowcase from "./pages/InputShowcase";
+import { SelectShowcase } from "./pages/SelectShowcase";
+import { TableShowcase } from "./pages/TableShowcase";
 
 function App() {
     return (
@@ -19,12 +21,23 @@ function App() {
                                 <li>
                                     <Link to="/showcase/inputs">Input Showcase</Link>
                                 </li>
+                                <br />
+                                <li>
+                                    <Link to="/showcase/select">Select Showcase</Link>
+                                </li>
+                                <br />
+                                <li>
+                                    <Link to="/showcase/tables">Tables Showcase</Link>
+                                </li>
+                                <br />
                             </ul>
                         </div>
                     }
                 />
                 <Route path="/showcase/buttons" element={<ButtonShowcase />} />
                 <Route path="/showcase/inputs" element={<InputShowcase />} />
+                <Route path="/showcase/select" element={<SelectShowcase />} />
+                <Route path="/showcase/tables" element={<TableShowcase />} />
             </Routes>
         </Router>
     );

@@ -1,0 +1,73 @@
+@use "../../../scss/abstracts" as *;
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: rem(8px);
+    overflow: hidden;
+    font-size: rem(14px);
+    text-align: left;
+
+    th,
+    td {
+        padding: rem(12px) rem(16px);
+        border-bottom: 1px solid $color-light-gray;
+    }
+
+    thead {
+        background-color: $color-light-gray;
+        font-weight: 600;
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+}
+
+.football {
+    background-color: $color-white;
+    font-family: "Inter", "Roboto", sans-serif;
+
+    thead {
+        background-color: $color-blue;
+        color: $color-white;
+    }
+
+    tbody tr:hover {
+        background-color: rgba($color-blue, 0.05);
+    }
+}
+
+.basketball {
+    background-color: $color-orange;
+    font-family: "Montserrat", "Bebas Neue", sans-serif;
+
+    thead {
+        background-color: $color-dark-orange;
+        color: $color-white;
+    }
+
+    tbody tr:hover {
+        background-color: rgba($color-dark-orange, 0.08);
+    }
+}
+
+.tennis {
+    background-color: $color-light-gray;
+    font-family: "Space Mono", monospace;
+
+    thead {
+        background-color: $color-dark-gray;
+        color: $color-white;
+    }
+
+    tbody tr:hover {
+        background-color: rgba($color-dark-gray, 0.08);
+    }
+}
+
+.cellWithIcon {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(10px);
+}
