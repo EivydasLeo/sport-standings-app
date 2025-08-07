@@ -1,0 +1,18 @@
+@use "../../scss/abstracts/" as *;
+
+.layout {
+    display: flex;
+    flex-direction: column;
+}
+
+.football {
+    font-family: $font-modern-san-serif;
+}
+
+.basketball {
+    font-family: $font-athletic-style;
+}
+
+.tennis {
+    font-family: $font-monospace;
+}
