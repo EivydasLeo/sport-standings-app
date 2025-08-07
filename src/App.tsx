@@ -3,6 +3,7 @@ import ButtonShowcase from "./pages/ButtonShowcase";
 import InputShowcase from "./pages/InputShowcase";
 import { SelectShowcase } from "./pages/SelectShowcase";
 import { TableShowcase } from "./pages/TableShowcase";
+import { Football } from "./pages/Football";
 
 function App() {
     return (
@@ -30,6 +31,10 @@ function App() {
                                     <Link to="/showcase/tables">Tables Showcase</Link>
                                 </li>
                                 <br />
+                                <li>
+                                    <Link to="/football">PremierLeaguePage</Link>
+                                </li>
+                                <br />
                             </ul>
                         </div>
                     }
@@ -38,6 +43,7 @@ function App() {
                 <Route path="/showcase/inputs" element={<InputShowcase />} />
                 <Route path="/showcase/select" element={<SelectShowcase />} />
                 <Route path="/showcase/tables" element={<TableShowcase />} />
+                <Route path="/football" element={<Football />} />
             </Routes>
         </Router>
     );
