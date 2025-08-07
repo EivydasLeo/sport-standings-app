@@ -2,11 +2,11 @@ import React from "react";
 import { Select } from "../ui/Select/Select";
 import { Input } from "../ui/Input/Input";
 import { Button } from "../ui/Button/Button";
-import styles from "./AddScoreForm.module.scss";
+import styles from "./ScoreForm.module.scss";
 import clsx from "clsx";
-import type { AddScoreFormProps } from "./AddScoreForm.types";
+import type { ScoreFormProps } from "./ScoreForm.types";
 
-export const AddScoreForm: React.FC<AddScoreFormProps> = ({
+export const ScoreForm: React.FC<ScoreFormProps> = ({
     heading,
     variant,
     homeTeamOptions,
@@ -21,7 +21,7 @@ export const AddScoreForm: React.FC<AddScoreFormProps> = ({
     onSubmit,
 }) => {
     return (
-        <div className={clsx(styles.formWrapper, variant && styles[variant])}>
+        <div className={clsx(styles.column, variant && styles[variant])}>
             {heading && <h3>{heading}</h3>}
 
             <div className={styles.row}>

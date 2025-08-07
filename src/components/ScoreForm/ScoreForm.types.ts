@@ -1,6 +1,6 @@
 export type Option = { label: string; value: string };
 
-export interface AddScoreFormProps {
+export interface ScoreFormProps {
     heading?: string;
     variant?: "football" | "basketball" | "tennis";
     homeTeamOptions: Option[];
