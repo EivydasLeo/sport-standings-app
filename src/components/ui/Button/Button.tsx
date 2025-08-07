@@ -9,11 +9,18 @@ export const Button: React.FC<ButtonProps> = ({
     icon,
     className,
     children,
+    fullWidth,
     ...props
 }) => {
     return (
         <button
-            className={clsx(styles.button, styles[variant], styles[size], className)}
+            className={clsx(
+                styles.button,
+                fullWidth && styles.fullWidth,
+                styles[variant],
+                styles[size],
+                className,
+            )}
             {...props}
         >
             {icon && <span className={styles.icon}>{icon}</span>}

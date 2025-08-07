@@ -4,4 +4,5 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
     variant?: "primary" | "secondary" | "accent" | "success" | "icon";
     size?: "sm" | "md" | "lg";
     icon?: React.ReactNode;
+    fullWidth?: boolean;
 }
