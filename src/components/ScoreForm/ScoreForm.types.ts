@@ -5,6 +5,8 @@ export interface ScoreFormProps {
     variant?: "football" | "basketball" | "tennis";
     homeTeamOptions: Option[];
     awayTeamOptions: Option[];
+    homeTeam: string;
+    awayTeam: string;
     homeScore: string;
     awayScore: string;
     buttonLabel?: string;
@@ -13,4 +15,5 @@ export interface ScoreFormProps {
     onHomeScoreChange: (value: string) => void;
     onAwayScoreChange: (value: string) => void;
     onSubmit: () => void;
+    disabled?: boolean;
 }

@@ -7,6 +7,6 @@ export interface Option {
 
 export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
     options: Option[];
-    name: string;
     id?: string;
+    name: string;
 }
