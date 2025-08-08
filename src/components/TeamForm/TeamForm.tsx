@@ -10,14 +10,37 @@ export const TeamForm: React.FC<TeamFormProps> = ({
     placeholder,
     buttonLabel,
     variant,
+    inputValue,
+    onInputChange,
+    onSubmit,
 }) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        onSubmit();
+    };
+
     return (
         <div className={clsx(styles.column, variant && styles[variant])}>
             {heading && <h3>{heading}</h3>}
-            <div className={styles.controls}>
-                <Input placeholder={placeholder} />
-                <Button>{buttonLabel}</Button>
-            </div>
+            <form className={styles.controls} onSubmit={handleSubmit}>
+                <Input
+                    placeholder={placeholder}
+                    value={inputValue}
+                    onChange={(e) => onInputChange(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key >= "0" && e.key <= "9") {
+                            e.preventDefault();
+                        }
+                    }}
+                    onPaste={(e) => {
+                        const paste = e.clipboardData.getData("text");
+                        if (/\d/.test(paste)) {
+                            e.preventDefault();
+                        }
+                    }}
+                />
+                <Button type="submit">{buttonLabel}</Button>
+            </form>
         </div>
     );
 };
