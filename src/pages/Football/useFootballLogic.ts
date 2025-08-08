@@ -1,9 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { TableRow } from "../../components/ui/Table/Table.types";
 
+const TEAMS_KEY = "football_teams";
+const MATCHES_KEY = "football_matches";
+
 export const useFootballLogic = () => {
-    const [teams, setTeams] = useState<TableRow[]>([]);
-    const [matches, setMatches] = useState<string[]>([]);
+    const [teams, setTeams] = useState<TableRow[]>(() => {
+        const saved = localStorage.getItem(TEAMS_KEY);
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    const [matches, setMatches] = useState<string[]>(() => {
+        const saved = localStorage.getItem(MATCHES_KEY);
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem(TEAMS_KEY, JSON.stringify(teams));
+    }, [teams]);
+
+    useEffect(() => {
+        localStorage.setItem(MATCHES_KEY, JSON.stringify(matches));
+    }, [matches]);
 
     const getMatchId = (teamA: string, teamB: string) => {
         const sorted = [teamA.toLowerCase(), teamB.toLowerCase()].sort();
@@ -12,7 +30,12 @@ export const useFootballLogic = () => {
 
     const addTeam = (teamName: string) => {
         const name = teamName.trim();
-        if (!name || teams.some((t) => t.name.toLowerCase() === name.toLowerCase())) return;
+        if (
+            !name ||
+            /\d/.test(name) ||
+            teams.some((t) => t.name.toLowerCase() === name.toLowerCase())
+        )
+            return;
 
         const newTeam: TableRow = {
             name,
