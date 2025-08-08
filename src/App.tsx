@@ -3,7 +3,7 @@ import ButtonShowcase from "./pages/ButtonShowcase";
 import InputShowcase from "./pages/InputShowcase";
 import { SelectShowcase } from "./pages/SelectShowcase";
 import { TableShowcase } from "./pages/TableShowcase";
-import { Football } from "./pages/Football";
+import { FootballPage } from "./pages/Football/FootballPage";
 
 function App() {
     return (
@@ -43,7 +43,7 @@ function App() {
                 <Route path="/showcase/inputs" element={<InputShowcase />} />
                 <Route path="/showcase/select" element={<SelectShowcase />} />
                 <Route path="/showcase/tables" element={<TableShowcase />} />
-                <Route path="/football" element={<Football />} />
+                <Route path="/football" element={<FootballPage />} />
             </Routes>
         </Router>
     );
