@@ -10,6 +10,7 @@ export const Button: React.FC<ButtonProps> = ({
     className,
     children,
     fullWidth,
+    disabled,
     ...props
 }) => {
     return (
@@ -20,7 +21,9 @@ export const Button: React.FC<ButtonProps> = ({
                 styles[variant],
                 styles[size],
                 className,
+                disabled && styles.disabled,
             )}
+            disabled={disabled}
             {...props}
         >
             {icon && <span className={styles.icon}>{icon}</span>}

@@ -11,9 +11,12 @@ export const ScoreForm: React.FC<ScoreFormProps> = ({
     variant,
     homeTeamOptions,
     awayTeamOptions,
+    homeTeam,
+    awayTeam,
     homeScore,
     awayScore,
     buttonLabel,
+    disabled,
     onHomeTeamChange,
     onAwayTeamChange,
     onHomeScoreChange,
@@ -27,11 +30,13 @@ export const ScoreForm: React.FC<ScoreFormProps> = ({
             <div className={styles.row}>
                 <Select
                     name="home"
+                    value={homeTeam}
                     options={homeTeamOptions}
                     onChange={(e) => onHomeTeamChange(e.target.value)}
                 />
                 <Select
                     name="away"
+                    value={awayTeam}
                     options={awayTeamOptions}
                     onChange={(e) => onAwayTeamChange(e.target.value)}
                 />
@@ -52,7 +57,7 @@ export const ScoreForm: React.FC<ScoreFormProps> = ({
                 />
             </div>
 
-            <Button fullWidth onClick={onSubmit}>
+            <Button fullWidth onClick={onSubmit} disabled={disabled}>
                 {buttonLabel}
             </Button>
         </div>
