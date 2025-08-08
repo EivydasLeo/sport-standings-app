@@ -9,4 +9,5 @@ export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElemen
     options: Option[];
     id?: string;
     name: string;
+    entityType?: "team" | "player";
 }
