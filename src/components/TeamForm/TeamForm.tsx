@@ -9,6 +9,7 @@ export const TeamForm: React.FC<TeamFormProps> = ({
     heading,
     placeholder,
     buttonLabel,
+    buttonVariant,
     variant,
     inputValue,
     onInputChange,
@@ -39,7 +40,9 @@ export const TeamForm: React.FC<TeamFormProps> = ({
                         }
                     }}
                 />
-                <Button type="submit">{buttonLabel}</Button>
+                <Button variant={buttonVariant} type="submit">
+                    {buttonLabel}
+                </Button>
             </form>
         </div>
     );
