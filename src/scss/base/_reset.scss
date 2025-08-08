@@ -1,3 +1,5 @@
+@use "../abstracts/colors" as *;
+
 *,
 *::before,
 *::after {
@@ -9,8 +11,15 @@
 html,
 body {
     height: 100%;
-    background-color: #fff;
-    color: #222;
+    background-color: $color-white;
+    color: $color-black;
+}
+
+#root {
+    max-width: 768px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin: 0 auto;
 }
 
 ul,

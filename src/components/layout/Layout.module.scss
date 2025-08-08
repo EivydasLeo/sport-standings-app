@@ -1,4 +1,5 @@
 @use "../../scss/abstracts/" as *;
+@use "../../scss/utils" as *;
 
 .layout {
     display: flex;
@@ -17,4 +18,10 @@
 
 .tennis {
     font-family: $font-monospace;
+    gap: rem(30px);
+    margin: rem(20px) 0;
+
+    @include respond-xs {
+        margin: rem(20px);
+    }
 }

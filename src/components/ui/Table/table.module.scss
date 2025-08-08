@@ -1,4 +1,5 @@
 @use "../../../scss/abstracts" as *;
+@use "../../../scss/utils/" as *;
 
 .table {
     width: 100%;
@@ -35,16 +36,20 @@
 }
 
 .tennis {
-    background-color: $color-light-gray;
+    background-color: $color-white;
 
     thead {
-        background-color: $color-dark-gray;
-        color: $color-white;
+        background-color: $color-gray;
+        color: $color-black;
     }
 }
 
 .cellWithIcon {
     display: inline-flex;
     align-items: center;
-    gap: rem(10px);
+    gap: rem(4px);
+
+    @include respond-xs {
+        gap: rem(10px);
+    }
 }
