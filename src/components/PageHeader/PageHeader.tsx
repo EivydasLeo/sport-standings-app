@@ -6,7 +6,7 @@ import type { PageHeaderProps } from "./PageHeader.types";
 export const PageHeader: React.FC<PageHeaderProps> = ({ title, icon, variant, className }) => {
     return (
         <header className={clsx(styles.header, variant && styles[variant], className)}>
-            {icon && <span className={styles.icon}>{icon}</span>}
+            {icon && <img src={icon} className={styles.icon}></img>}
             <h2 className={styles.title}>{title}</h2>
         </header>
     );

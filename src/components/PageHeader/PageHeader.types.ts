@@ -1,6 +1,6 @@
 export interface PageHeaderProps {
     title: string;
-    icon?: React.ReactNode;
+    icon?: string;
     variant?: "football" | "basketball" | "tennis" | "default";
     className?: string;
 }
