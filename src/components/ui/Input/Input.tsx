@@ -16,6 +16,7 @@ export const Input: React.FC<InputProps> = ({
             <input
                 id={props.id}
                 name={props.name}
+                min={0}
                 className={clsx(styles.input, error && styles.error)}
                 {...props}
             />

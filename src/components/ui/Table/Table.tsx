@@ -27,7 +27,12 @@ export const Table: React.FC<TableProps> = ({ headers, rows, variant }) => {
                                 )}
                                 {row.name}
                             </td>
-                            {row.played !== undefined && <td>{row.played}</td>}
+
+                            {variant === "tennis" && <td>{row.matches ?? 0}</td>}
+
+                            {variant !== "tennis" && row.draws !== undefined && (
+                                <td>{row.draws}</td>
+                            )}
                             <td>
                                 <div className={clsx(variant === "tennis" && styles.cellWithIcon)}>
                                     {row.wins}
@@ -38,7 +43,6 @@ export const Table: React.FC<TableProps> = ({ headers, rows, variant }) => {
                                     )}
                                 </div>
                             </td>
-
                             {row.draws !== undefined && <td>{row.draws}</td>}
                             <td>
                                 <div className={clsx(variant === "tennis" && styles.cellWithIcon)}>
