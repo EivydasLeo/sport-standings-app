@@ -1,8 +1,11 @@
+import type { ButtonProps } from "../ui/Button/Button.types";
+
 export type Option = { label: string; value: string };
 
 export interface ScoreFormProps {
     heading?: string;
     variant?: "football" | "basketball" | "tennis";
+    buttonVariant?: ButtonProps["variant"];
     homeTeamOptions: Option[];
     awayTeamOptions: Option[];
     homeTeam: string;
@@ -16,4 +19,5 @@ export interface ScoreFormProps {
     onAwayScoreChange: (value: string) => void;
     onSubmit: () => void;
     disabled?: boolean;
+    entityType?: "team" | "player";
 }
