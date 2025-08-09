@@ -4,6 +4,7 @@
 .layout {
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 }
 
 .football {
@@ -14,6 +15,13 @@
 
 .basketball {
     font-family: $font-athletic-style;
+    background-color: $color-dark-green;
+    gap: rem(30px);
+    padding: rem(20px) 0;
+
+    @include respond-xs {
+        padding: rem(20px);
+    }
 }
 
 .tennis {

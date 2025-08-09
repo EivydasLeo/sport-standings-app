@@ -12,7 +12,6 @@
     th,
     td {
         padding: rem(12px) rem(16px);
-        border-bottom: 1px solid $color-gray;
     }
 }
 
@@ -24,14 +23,24 @@
         background-color: $color-gray;
         color: $color-black;
     }
+
+    th,
+    td {
+        border-bottom: 1px solid $color-gray;
+    }
 }
 
 .basketball {
-    background-color: $color-orange;
+    background-color: $color-dark-green;
 
     thead {
-        background-color: $color-dark-orange;
+        background-color: $color-dark-green;
         color: $color-white;
+    }
+
+    tbody {
+        color: $color-white;
+        background-color: $color-black-green;
     }
 }
 
@@ -41,6 +50,11 @@
     thead {
         background-color: $color-gray;
         color: $color-black;
+    }
+
+    th,
+    td {
+        border-bottom: 1px solid $color-gray;
     }
 }
 
@@ -52,4 +66,14 @@
     @include respond-xs {
         gap: rem(10px);
     }
+}
+
+.cellFlex {
+    display: flex;
+    align-items: center;
+    gap: rem(6px);
+}
+
+.flag {
+    width: rem(20px);
 }

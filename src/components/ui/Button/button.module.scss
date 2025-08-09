@@ -8,6 +8,7 @@
     align-items: center;
     justify-content: center;
     padding: 0 rem(16px);
+    line-height: 1;
 }
 
 .sm {
@@ -37,6 +38,7 @@
 .secondary {
     background-color: $color-orange;
     color: $color-white;
+    gap: rem(4px);
 }
 
 .accent {

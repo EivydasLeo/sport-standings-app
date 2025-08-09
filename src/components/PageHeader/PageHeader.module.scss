@@ -9,10 +9,6 @@
     color: $color-white;
 }
 
-.icon {
-    filter: brightness(0) invert(1);
-}
-
 .football {
     background-color: $color-purple;
     font-family: $font-modern-san-serif;
@@ -21,6 +17,11 @@
 .basketball {
     background-color: $color-dark-green;
     font-family: $font-athletic-style;
+    gap: rem(18px);
+
+    h2 {
+        font-weight: 100;
+    }
 }
 
 .tennis {
