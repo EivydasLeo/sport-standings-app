@@ -1,106 +1,84 @@
-import { useState } from "react";
 import { Layout } from "../../components/layout/Layout";
 import { PageHeader } from "../../components/PageHeader/PageHeader";
-import { TeamForm } from "../../components/TeamForm/TeamForm";
-import { ScoreForm } from "../../components/ScoreForm/ScoreForm";
+import { TeamScorePanel } from "../../components/TeamScorePanel/TeamScorePanel";
 import { Table } from "../../components/ui/Table/Table";
 import { footballHeaders } from "../../data/data";
 import { useFootballLogic } from "./useFootballLogic";
+import { useCallback, useMemo } from "react";
+import { useFormState } from "../../hooks/useFormState";
+import { isValidPair, isValidScorePair } from "../../utils/validators";
+import { filterOptions, type Option } from "../../utils/options";
 
 export const FootballPage: React.FC = () => {
     const { teams, addTeam, addMatch, getSortedTeams, getMatchId, matches } = useFootballLogic();
+    const { name, setName, home, setHome, away, setAway, h, setH, a, setA, resetScore, resetName } =
+        useFormState();
 
-    const [newTeam, setNewTeam] = useState("");
-    const [homeTeam, setHomeTeam] = useState("");
-    const [awayTeam, setAwayTeam] = useState("");
-    const [homeScore, setHomeScore] = useState("");
-    const [awayScore, setAwayScore] = useState("");
+    const options: Option[] = useMemo(
+        () => teams.map((t) => ({ value: t.name, label: t.name })),
+        [teams],
+    );
+    const hasMatch = useCallback(
+        (x: string, y: string) => matches.includes(getMatchId(x, y)),
+        [matches, getMatchId],
+    );
 
+    const homeOpts = useMemo(
+        () => filterOptions(options, home, away, hasMatch),
+        [options, home, away, hasMatch],
+    );
+
+    const awayOpts = useMemo(
+        () => filterOptions(options, away, home, hasMatch),
+        [options, away, home, hasMatch],
+    );
+
+    const disabled = !isValidPair(home, away) || !isValidScorePair(h, a);
     const handleAddTeam = () => {
-        addTeam(newTeam);
-        setNewTeam("");
+        addTeam(name);
+        resetName();
     };
-
-    const handleAddMatch = () => {
-        if (
-            !homeTeam ||
-            !awayTeam ||
-            homeTeam === awayTeam ||
-            homeScore === "" ||
-            awayScore === "" ||
-            isNaN(Number(homeScore)) ||
-            isNaN(Number(awayScore))
-        ) {
-            return;
-        }
-
-        addMatch(homeTeam, awayTeam, +homeScore, +awayScore);
-
-        setHomeTeam("");
-        setAwayTeam("");
-        setHomeScore("");
-        setAwayScore("");
+    const handleAddScore = () => {
+        if (disabled) return;
+        addMatch(home, away, +h, +a);
+        resetScore();
     };
-
-    const isAddScoreDisabled =
-        !homeTeam ||
-        !awayTeam ||
-        homeTeam === awayTeam ||
-        homeScore === "" ||
-        awayScore === "" ||
-        isNaN(Number(homeScore)) ||
-        isNaN(Number(awayScore));
-
-    const filteredHomeTeamOptions = teams
-        .filter((team) => team.name !== awayTeam)
-        .filter((team) => {
-            if (!awayTeam) return true;
-            const matchId = getMatchId(team.name, awayTeam);
-            return !matches.includes(matchId);
-        })
-        .map((team) => ({ value: team.name, label: team.name }));
-
-    const filteredAwayTeamOptions = teams
-        .filter((team) => team.name !== homeTeam)
-        .filter((team) => {
-            if (!homeTeam) return true;
-            const matchId = getMatchId(team.name, homeTeam);
-            return !matches.includes(matchId);
-        })
-        .map((team) => ({ value: team.name, label: team.name }));
 
     return (
         <>
             <PageHeader title="Premier League" variant="football" />
             <Layout variant="football">
-                <TeamForm
-                    heading="Add Team"
-                    variant="football"
-                    inputValue={newTeam}
-                    onInputChange={setNewTeam}
-                    onSubmit={handleAddTeam}
-                    placeholder="Team name"
-                    buttonLabel="Add"
+                <TeamScorePanel
+                    addTeamButtonLabel="Team"
+                    addTeamButtonVariant="primary"
+                    addScoreButtonVariant="primary"
+                    teamFormProps={{
+                        heading: "Add Team",
+                        placeholder: "Team name",
+                        inputValue: name,
+                        onInputChange: setName,
+                        onSubmit: handleAddTeam,
+                        buttonLabel: "Add",
+                        variant: "football",
+                    }}
+                    scoreFormProps={{
+                        heading: "Add Score",
+                        homeTeam: home,
+                        awayTeam: away,
+                        homeTeamOptions: homeOpts,
+                        awayTeamOptions: awayOpts,
+                        homeScore: h,
+                        awayScore: a,
+                        onHomeTeamChange: setHome,
+                        onAwayTeamChange: setAway,
+                        onHomeScoreChange: setH,
+                        onAwayScoreChange: setA,
+                        onSubmit: handleAddScore,
+                        buttonLabel: "Add Score",
+                        variant: "football",
+                        disabled,
+                    }}
                 />
-
-                <ScoreForm
-                    heading="Add Score"
-                    variant="football"
-                    homeTeam={homeTeam}
-                    awayTeam={awayTeam}
-                    homeTeamOptions={filteredHomeTeamOptions}
-                    awayTeamOptions={filteredAwayTeamOptions}
-                    homeScore={homeScore}
-                    awayScore={awayScore}
-                    onHomeTeamChange={setHomeTeam}
-                    onAwayTeamChange={setAwayTeam}
-                    onHomeScoreChange={setHomeScore}
-                    onAwayScoreChange={setAwayScore}
-                    onSubmit={handleAddMatch}
-                    buttonLabel="Add Score"
-                    disabled={isAddScoreDisabled}
-                />
-
                 <Table variant="football" headers={footballHeaders} rows={getSortedTeams()} />
             </Layout>
         </>

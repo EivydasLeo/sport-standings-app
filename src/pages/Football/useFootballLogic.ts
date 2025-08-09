@@ -1,41 +1,21 @@
-import { useEffect, useState } from "react";
 import type { TableRow } from "../../components/ui/Table/Table.types";
+import { useLocalStorageState } from "../../utils/useLocalStorageState";
+import { makePairId } from "../../utils/matchId";
+import { applyResult } from "../../utils/points";
 
 const TEAMS_KEY = "football_teams";
 const MATCHES_KEY = "football_matches";
 
 export const useFootballLogic = () => {
-    const [teams, setTeams] = useState<TableRow[]>(() => {
-        const saved = localStorage.getItem(TEAMS_KEY);
-        return saved ? JSON.parse(saved) : [];
-    });
+    const [teams, setTeams] = useLocalStorageState<TableRow[]>(TEAMS_KEY, []);
+    const [matches, setMatches] = useLocalStorageState<string[]>(MATCHES_KEY, []);
 
-    const [matches, setMatches] = useState<string[]>(() => {
-        const saved = localStorage.getItem(MATCHES_KEY);
-        return saved ? JSON.parse(saved) : [];
-    });
-
-    useEffect(() => {
-        localStorage.setItem(TEAMS_KEY, JSON.stringify(teams));
-    }, [teams]);
-
-    useEffect(() => {
-        localStorage.setItem(MATCHES_KEY, JSON.stringify(matches));
-    }, [matches]);
-
-    const getMatchId = (teamA: string, teamB: string) => {
-        const sorted = [teamA.toLowerCase(), teamB.toLowerCase()].sort();
-        return `${sorted[0]}-${sorted[1]}`;
-    };
+    const getMatchId = (a: string, b: string) => makePairId(a, b, "-");
 
     const addTeam = (teamName: string) => {
         const name = teamName.trim();
-        if (
-            !name ||
-            /\d/.test(name) ||
-            teams.some((t) => t.name.toLowerCase() === name.toLowerCase())
-        )
-            return;
+        if (!name || /\d/.test(name)) return;
+        if (teams.some((t) => t.name.toLowerCase() === name.toLowerCase())) return;
 
         const newTeam: TableRow = {
             name,
@@ -50,49 +30,28 @@ export const useFootballLogic = () => {
 
     const addMatch = (home: string, away: string, homeScore: number, awayScore: number) => {
         if (!home || !away || home === away) return;
+        if ([homeScore, awayScore].some((v) => Number.isNaN(v) || v < 0)) return;
 
-        const matchId = getMatchId(home, away);
-        if (matches.includes(matchId)) return;
+        const id = getMatchId(home, away);
+        if (matches.includes(id)) return;
 
-        const updatedTeams = teams.map((team) => {
-            if (team.name !== home && team.name !== away) return team;
-
-            const isHome = team.name === home;
-            const goalsFor = isHome ? homeScore : awayScore;
-            const goalsAgainst = isHome ? awayScore : homeScore;
-
-            const win = goalsFor > goalsAgainst;
-            const draw = goalsFor === goalsAgainst;
-
-            const updatedTeam = { ...team, played: (team.played ?? 0) + 1 };
-
-            if (win) {
-                updatedTeam.wins += 1;
-                updatedTeam.points += 3;
-            } else if (draw) {
-                updatedTeam.draws = (updatedTeam.draws ?? 0) + 1;
-                updatedTeam.points += 1;
-            } else {
-                updatedTeam.losses += 1;
-            }
-
-            return updatedTeam;
-        });
-
-        setTeams(updatedTeams);
-        setMatches((prev) => [...prev, matchId]);
+        setTeams((prev) =>
+            prev.map((team) => {
+                if (team.name !== home && team.name !== away) return team;
+                const isHome = team.name === home;
+                return applyResult(
+                    team,
+                    isHome ? homeScore : awayScore,
+                    isHome ? awayScore : homeScore,
+                    true,
+                    "played",
+                );
+            }),
+        );
+        setMatches((prev) => [...prev, id]);
     };
 
-    const getSortedTeams = () => {
-        return [...teams].sort((a, b) => b.points - a.points);
-    };
+    const getSortedTeams = () => [...teams].sort((a, b) => b.points - a.points);
 
-    return {
-        teams,
-        matches,
-        addTeam,
-        addMatch,
-        getSortedTeams,
-        getMatchId,
-    };
+    return { teams, matches, addTeam, addMatch, getSortedTeams, getMatchId };
 };

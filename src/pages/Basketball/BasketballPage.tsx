@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Layout } from "../../components/layout/Layout";
 import { PageHeader } from "../../components/PageHeader/PageHeader";
 import { TeamScorePanel } from "../../components/TeamScorePanel/TeamScorePanel";
@@ -7,81 +7,58 @@ import { Table } from "../../components/ui/Table/Table";
 import { useBasketballLogic } from "./useBasketBallLogic";
 import type { Option } from "../../components/ui/Select/Select.types";
 import basketballIcon from "../../assets/basketball.svg";
-import { normalizeName, COUNTRY_CODE_BY_NAME } from "../../data/data";
-import { basketballHeaders } from "../../data/data";
+import { normalizeName, COUNTRY_CODE_BY_NAME, basketballHeaders } from "../../data/data";
+import { useFormState } from "../../hooks/useFormState";
+import { isValidPair, isValidScorePair } from "../../utils/validators";
+import { filterOptions } from "../../utils/options";
 
 export const BasketballPage: React.FC = () => {
     const { teams, matches, addTeam, addMatch, getSortedTeams, getMatchId, matchIds } =
         useBasketballLogic();
+    const { name, setName, home, setHome, away, setAway, h, setH, a, setA, resetScore, resetName } =
+        useFormState();
 
-    const [newTeam, setNewTeam] = useState("");
-    const [home, setHome] = useState("");
-    const [away, setAway] = useState("");
-    const [hScore, setHScore] = useState("");
-    const [aScore, setAScore] = useState("");
-
-    const teamOptions: Option[] = useMemo(
+    const options: Option[] = useMemo(
         () => teams.map((t) => ({ value: t.name, label: t.name })),
         [teams],
     );
+    const hasMatch = useCallback(
+        (a: string, b: string) => matchIds.has(getMatchId(a, b)),
+        [matchIds, getMatchId],
+    );
 
-    const filteredHomeOptions = useMemo(() => {
-        return teamOptions.filter((opt) => {
-            if (!away) return true;
-            return !matchIds.has(getMatchId(opt.value, away)) && opt.value !== away;
-        });
-    }, [teamOptions, away, matchIds, getMatchId]);
+    const homeOpts = useMemo(
+        () => filterOptions(options, home, away, hasMatch),
+        [options, home, away, hasMatch],
+    );
 
-    const filteredAwayOptions = useMemo(() => {
-        return teamOptions.filter((opt) => {
-            if (!home) return true;
-            return !matchIds.has(getMatchId(opt.value, home)) && opt.value !== home;
-        });
-    }, [teamOptions, home, matchIds, getMatchId]);
+    const awayOpts = useMemo(
+        () => filterOptions(options, away, home, hasMatch),
+        [options, away, home, hasMatch],
+    );
 
     const handleAddTeam = () => {
-        const key = normalizeName(newTeam);
+        const key = normalizeName(name);
         const code = COUNTRY_CODE_BY_NAME[key];
-        addTeam(newTeam, code);
-        setNewTeam("");
+        addTeam(name, code);
+        resetName();
     };
 
+    const disabled = !isValidPair(home, away) || !isValidScorePair(h, a);
     const handleAddScore = () => {
-        if (!home || !away || home === away) return;
-        if (hScore === "" || aScore === "") return;
-
-        const hs = Number(hScore);
-        const as = Number(aScore);
-        if (Number.isNaN(hs) || Number.isNaN(as) || hs < 0 || as < 0) return;
-
-        addMatch(home, away, hs, as);
-
-        setHome("");
-        setAway("");
-        setHScore("");
-        setAScore("");
+        if (disabled) return;
+        addMatch(home, away, +h, +a);
+        resetScore();
     };
 
-    const isAddDisabled =
-        !home ||
-        !away ||
-        home === away ||
-        hScore === "" ||
-        aScore === "" ||
-        Number(hScore) < 0 ||
-        Number(aScore) < 0;
+    const tableRows = useMemo(
+        () => getSortedTeams().map((t) => ({ ...t, flag: t.countryCode })),
+        [getSortedTeams],
+    );
 
-    const tableRows = useMemo(() => {
-        const sorted = getSortedTeams();
-        return sorted.map((t) => ({
-            ...t,
-            flag: t.countryCode,
-        }));
-    }, [getSortedTeams]);
     return (
         <>
             <PageHeader icon={basketballIcon} title="EUROBASKET" variant="basketball" />
-
             <Layout variant="basketball">
                 <TeamScorePanel
                     addTeamButtonVariant="secondary"
@@ -90,8 +67,8 @@ export const BasketballPage: React.FC = () => {
                     teamFormProps={{
                         heading: "Add Team",
                         placeholder: "Team name",
-                        inputValue: newTeam,
-                        onInputChange: setNewTeam,
+                        inputValue: name,
+                        onInputChange: setName,
                         onSubmit: handleAddTeam,
                         buttonLabel: "Add",
                         buttonVariant: "secondary",
@@ -101,19 +78,19 @@ export const BasketballPage: React.FC = () => {
                         heading: "Add Score",
                         homeTeam: home,
                         awayTeam: away,
-                        homeTeamOptions: filteredHomeOptions,
-                        awayTeamOptions: filteredAwayOptions,
-                        homeScore: hScore,
-                        awayScore: aScore,
+                        homeTeamOptions: homeOpts,
+                        awayTeamOptions: awayOpts,
+                        homeScore: h,
+                        awayScore: a,
                         onHomeTeamChange: setHome,
                         onAwayTeamChange: setAway,
-                        onHomeScoreChange: setHScore,
-                        onAwayScoreChange: setAScore,
+                        onHomeScoreChange: setH,
+                        onAwayScoreChange: setA,
                         onSubmit: handleAddScore,
                         buttonLabel: "Add Score",
                         buttonVariant: "secondary",
                         variant: "basketball",
-                        disabled: isAddDisabled,
+                        disabled,
                     }}
                 />
 

@@ -1,70 +1,50 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import type { TableRow } from "../../components/ui/Table/Table.types";
+import { useLocalStorageState } from "../../utils/useLocalStorageState";
+import { makePairId } from "../../utils/matchId";
+import { applyResult } from "../../utils/points";
 import { COUNTRY_CODE_BY_NAME, normalizeName } from "../../data/data";
 
-export type Team = TableRow & {
-    countryCode?: string;
-};
-
-export type PlayedMatch = {
-    home: string;
-    away: string;
-    homeScore: number;
-    awayScore: number;
-};
+export type Team = TableRow & { countryCode?: string };
+export type PlayedMatch = { home: string; away: string; homeScore: number; awayScore: number };
 
 const TEAMS_KEY = "basketball-teams";
 const MATCHES_KEY = "basketball-matches";
 
 export const useBasketballLogic = () => {
-    const [teams, setTeams] = useState<Team[]>(() => {
-        const saved = localStorage.getItem(TEAMS_KEY);
-        return saved ? JSON.parse(saved) : [];
-    });
+    const [teams, setTeams] = useLocalStorageState<Team[]>(TEAMS_KEY, []);
+    const [matches, setMatches] = useLocalStorageState<PlayedMatch[]>(MATCHES_KEY, []);
 
-    const [matches, setMatches] = useState<PlayedMatch[]>(() => {
-        const saved = localStorage.getItem(MATCHES_KEY);
-        return saved ? JSON.parse(saved) : [];
-    });
-
-    useEffect(() => {
-        localStorage.setItem(TEAMS_KEY, JSON.stringify(teams));
-    }, [teams]);
-
-    useEffect(() => {
-        localStorage.setItem(MATCHES_KEY, JSON.stringify(matches));
-    }, [matches]);
-
-    useEffect(() => {
-        if (!teams.length) return;
-        const fixed = teams.map((t) =>
-            t.countryCode ? t : { ...t, countryCode: COUNTRY_CODE_BY_NAME[normalizeName(t.name)] },
-        );
-        if (JSON.stringify(fixed) !== JSON.stringify(teams)) {
-            setTeams(fixed);
-        }
-    }, []);
-
-    const getMatchId = (a: string, b: string) => {
-        const [x, y] = [a.toLowerCase(), b.toLowerCase()].sort();
-        return `${x}__${y}`;
-    };
+    const getMatchId = (a: string, b: string) => makePairId(a, b, "__");
 
     const matchIds = useMemo(
         () => new Set(matches.map((m) => getMatchId(m.home, m.away))),
         [matches],
     );
 
+    useEffect(() => {
+        if (!teams.length) return;
+        const fixed = teams.map((t) => {
+            if (t.countryCode) return t;
+            const cc = COUNTRY_CODE_BY_NAME[normalizeName(t.name)];
+            return { ...t, countryCode: cc?.toUpperCase() };
+        });
+        if (JSON.stringify(fixed) !== JSON.stringify(teams)) {
+            setTeams(fixed);
+        }
+    }, [teams, setTeams]);
+
     const addTeam = (name: string, countryCode?: string) => {
         const trimmed = name.trim();
         if (!trimmed) return;
         if (teams.some((t) => t.name.toLowerCase() === trimmed.toLowerCase())) return;
 
-        const guessed = countryCode ?? COUNTRY_CODE_BY_NAME[normalizeName(trimmed)];
-
+        const guessed = (
+            countryCode ?? COUNTRY_CODE_BY_NAME[normalizeName(trimmed)]
+        )?.toUpperCase();
         const newTeam: Team = {
             name: trimmed,
-            countryCode: guessed?.toUpperCase(),
+            countryCode: guessed,
             wins: 0,
             losses: 0,
             draws: 0,
@@ -74,56 +54,30 @@ export const useBasketballLogic = () => {
         setTeams((prev) => [...prev, newTeam]);
     };
 
-    const addMatch = (home: string, away: string, homeScore: number, awayScore: number) => {
+    const addMatch = (home: string, away: string, hs: number, as: number) => {
         if (!home || !away || home === away) return;
-        if (homeScore < 0 || awayScore < 0) return;
+        if ([hs, as].some((v) => Number.isNaN(v) || v < 0)) return;
 
         const id = getMatchId(home, away);
         if (matchIds.has(id)) return;
 
-        const updated = teams.map((team) => {
-            if (team.name !== home && team.name !== away) return team;
-
-            const isHome = team.name === home;
-            const own = isHome ? homeScore : awayScore;
-            const opp = isHome ? awayScore : homeScore;
-
-            const win = own > opp;
-            const draw = own === opp;
-
-            const t: Team = { ...team, played: (team.played ?? 0) + 1 };
-
-            if (win) {
-                t.wins += 1;
-                t.points += 3;
-            } else if (draw) {
-                t.draws = (t.draws ?? 0) + 1;
-                t.points += 1;
-            } else {
-                t.losses += 1;
-            }
-            return t;
-        });
-
-        setTeams(updated);
-        setMatches((prev) => [...prev, { home, away, homeScore, awayScore }]);
+        setTeams((prev) =>
+            prev.map((team) => {
+                if (team.name !== home && team.name !== away) return team;
+                const isHome = team.name === home;
+                return applyResult(team, isHome ? hs : as, isHome ? as : hs, true, "played");
+            }),
+        );
+        setMatches((prev) => [...prev, { home, away, homeScore: hs, awayScore: as }]);
     };
 
     const getSortedTeams = () => {
         return [...teams].sort((a, b) => {
             if (b.points !== a.points) return b.points - a.points;
-            if (b.wins !== a.wins) return b.wins - a.wins;
+            if ((b.wins ?? 0) !== (a.wins ?? 0)) return (b.wins ?? 0) - (a.wins ?? 0);
             return (b.draws ?? 0) - (a.draws ?? 0);
         });
     };
 
-    return {
-        teams,
-        matches,
-        addTeam,
-        addMatch,
-        getSortedTeams,
-        getMatchId,
-        matchIds,
-    };
+    return { teams, matches, addTeam, addMatch, getSortedTeams, getMatchId, matchIds };
 };

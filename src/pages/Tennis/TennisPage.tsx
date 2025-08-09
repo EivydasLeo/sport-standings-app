@@ -4,56 +4,51 @@ import { Table } from "../../components/ui/Table/Table";
 import { TeamScorePanel } from "../../components/TeamScorePanel/TeamScorePanel";
 import { useTennisLogic } from "./useTennisLogic";
 import { tennisHeader } from "../../data/data";
-import Tennis from "../../assets/tennis.svg";
-import { useState } from "react";
+import TennisIcon from "../../assets/tennis.svg";
+import { useCallback, useMemo } from "react";
+import { useFormState } from "../../hooks/useFormState";
+import { isValidPair, isValidScorePair } from "../../utils/validators";
+import { filterOptions, type Option } from "../../utils/options";
 
 export const TennisPage: React.FC = () => {
     const { players, matches, addPlayer, addMatch, getSortedPlayers, getMatchId } =
         useTennisLogic();
+    const { name, setName, home, setHome, away, setAway, h, setH, a, setA, resetScore, resetName } =
+        useFormState();
 
-    const [playerName, setPlayerName] = useState("");
-    const [player1, setPlayer1] = useState("");
-    const [player2, setPlayer2] = useState("");
-    const [score1, setScore1] = useState("");
-    const [score2, setScore2] = useState("");
+    const options: Option[] = useMemo(
+        () => players.map((p) => ({ value: p.name, label: p.name })),
+        [players],
+    );
+    const hasMatch = useCallback(
+        (x: string, y: string) => matches.includes(getMatchId(x, y)),
+        [matches, getMatchId],
+    );
 
+    const homeOpts = useMemo(
+        () => filterOptions(options, home, away, hasMatch),
+        [options, home, away, hasMatch],
+    );
+
+    const awayOpts = useMemo(
+        () => filterOptions(options, away, home, hasMatch),
+        [options, away, home, hasMatch],
+    );
+
+    const disabled = !isValidPair(home, away) || !isValidScorePair(h, a);
     const handleAddPlayer = () => {
-        addPlayer(playerName);
-        setPlayerName("");
+        addPlayer(name);
+        resetName();
     };
-
     const handleAddScore = () => {
-        if (!player1 || !player2 || player1 === player2 || score1 === "" || score2 === "") return;
-
-        addMatch(player1, player2, +score1, +score2);
-        setPlayer1("");
-        setPlayer2("");
-        setScore1("");
-        setScore2("");
+        if (disabled) return;
+        addMatch(home, away, +h, +a);
+        resetScore();
     };
-
-    const playerOptions1 = players
-        .filter((p) => p.name !== player2)
-        .filter((p) => {
-            if (!player2) return true;
-            return !matches.includes(getMatchId(p.name, player2));
-        })
-        .map((p) => ({ value: p.name, label: p.name }));
-
-    const playerOptions2 = players
-        .filter((p) => p.name !== player1)
-        .filter((p) => {
-            if (!player1) return true;
-            return !matches.includes(getMatchId(p.name, player1));
-        })
-        .map((p) => ({ value: p.name, label: p.name }));
-
-    const formDisabled =
-        !player1 || !player2 || player1 === player2 || score1 === "" || score2 === "";
 
     return (
         <>
-            <PageHeader icon={Tennis} title="Wimbledon" variant="tennis" />
+            <PageHeader icon={TennisIcon} title="Wimbledon" variant="tennis" />
             <Layout variant="tennis">
                 <TeamScorePanel
                     addTeamButtonVariant="success"
@@ -63,8 +58,8 @@ export const TennisPage: React.FC = () => {
                     teamFormProps={{
                         heading: "Add Player",
                         placeholder: "Enter player name",
-                        inputValue: playerName,
-                        onInputChange: setPlayerName,
+                        inputValue: name,
+                        onInputChange: setName,
                         onSubmit: handleAddPlayer,
                         buttonLabel: "Add",
                         buttonVariant: "success",
@@ -74,20 +69,20 @@ export const TennisPage: React.FC = () => {
                         entityType: "player",
                         heading: "Add Score",
                         buttonVariant: "accent",
-                        homeTeam: player1,
-                        awayTeam: player2,
-                        homeTeamOptions: playerOptions1,
-                        awayTeamOptions: playerOptions2,
-                        homeScore: score1,
-                        awayScore: score2,
-                        onHomeTeamChange: setPlayer1,
-                        onAwayTeamChange: setPlayer2,
-                        onHomeScoreChange: setScore1,
-                        onAwayScoreChange: setScore2,
+                        homeTeam: home,
+                        awayTeam: away,
+                        homeTeamOptions: homeOpts,
+                        awayTeamOptions: awayOpts,
+                        homeScore: h,
+                        awayScore: a,
+                        onHomeTeamChange: setHome,
+                        onAwayTeamChange: setAway,
+                        onHomeScoreChange: setH,
+                        onAwayScoreChange: setA,
                         onSubmit: handleAddScore,
                         buttonLabel: "Add Score",
                         variant: "tennis",
-                        disabled: formDisabled,
+                        disabled,
                     }}
                 />
                 <Table variant="tennis" headers={tennisHeader} rows={getSortedPlayers()} />
