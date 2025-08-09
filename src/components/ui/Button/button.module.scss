@@ -1,4 +1,5 @@
 @use "../../../scss/abstracts" as *;
+@use "../../../scss/utils/" as *;
 
 .button {
     border: none;
@@ -44,15 +45,21 @@
 .accent {
     background-color: $color-purple;
     color: $color-white;
-    gap: rem(10px);
-    font-size: 18px;
+
+    @include respond-xs {
+        gap: rem(10px);
+        font-size: 18px;
+    }
 }
 
 .success {
     background-color: $color-green;
     color: $color-white;
-    gap: rem(10px);
-    font-size: 18px;
+
+    @include respond-xs {
+        gap: rem(10px);
+        font-size: 18px;
+    }
 }
 
 .icon {
