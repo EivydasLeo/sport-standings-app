@@ -3,7 +3,7 @@ import { PageHeader } from "../../components/PageHeader/PageHeader";
 import { Table } from "../../components/ui/Table/Table";
 import { TeamScorePanel } from "../../components/TeamScorePanel/TeamScorePanel";
 import { useTennisLogic } from "./useTennisLogic";
-import { tennisHeader } from "../../data/tennis";
+import { tennisHeader } from "../../data/data";
 import Tennis from "../../assets/tennis.svg";
 import { useState } from "react";
 

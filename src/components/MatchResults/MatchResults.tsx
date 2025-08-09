@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import styles from "./MatchResults.module.scss";
 import Flag from "react-world-flags";
 import type { MatchResultsProps } from "./MatchResults.types";
-import { COUNTRY_CODE_BY_NAME, normalizeName } from "../../data/countryCode";
+import { COUNTRY_CODE_BY_NAME, normalizeName } from "../../data/data";
 
 const FlagIcon: React.FC<{ code?: string; width: number; alt: string }> = ({
     code,

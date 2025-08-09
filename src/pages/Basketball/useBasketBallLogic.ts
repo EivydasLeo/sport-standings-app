@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import type { TableRow } from "../../components/ui/Table/Table.types";
-import { COUNTRY_CODE_BY_NAME, normalizeName } from "../../data/countryCode";
+import { COUNTRY_CODE_BY_NAME, normalizeName } from "../../data/data";
 
 export type Team = TableRow & {
     countryCode?: string;

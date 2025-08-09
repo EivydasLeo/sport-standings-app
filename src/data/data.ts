@@ -1,3 +1,6 @@
+export const basketballHeaders = ["Team", "W", "L", "D", "Pts"];
+export const footballHeaders = ["Team", "P", "W", "D", "L", "Pts"];
+export const tennisHeader = ["Player", "M", "W", "L", "Pts"];
 export const COUNTRY_CODE_BY_NAME: Record<string, string> = {
     belgium: "BE",
     bosniaandherzegovina: "BA",

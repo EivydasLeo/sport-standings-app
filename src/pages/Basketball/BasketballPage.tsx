@@ -7,8 +7,8 @@ import { Table } from "../../components/ui/Table/Table";
 import { useBasketballLogic } from "./useBasketBallLogic";
 import type { Option } from "../../components/ui/Select/Select.types";
 import basketballIcon from "../../assets/basketball.svg";
-import { normalizeName, COUNTRY_CODE_BY_NAME } from "../../data/countryCode";
-import { basketballHeaders } from "../../data/basketball";
+import { normalizeName, COUNTRY_CODE_BY_NAME } from "../../data/data";
+import { basketballHeaders } from "../../data/data";
 
 export const BasketballPage: React.FC = () => {
     const { teams, matches, addTeam, addMatch, getSortedTeams, getMatchId, matchIds } =

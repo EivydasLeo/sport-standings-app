@@ -4,7 +4,7 @@ import { PageHeader } from "../../components/PageHeader/PageHeader";
 import { TeamForm } from "../../components/TeamForm/TeamForm";
 import { ScoreForm } from "../../components/ScoreForm/ScoreForm";
 import { Table } from "../../components/ui/Table/Table";
-import { footballHeaders } from "../../data/football";
+import { footballHeaders } from "../../data/data";
 import { useFootballLogic } from "./useFootballLogic";
 
 export const FootballPage: React.FC = () => {
