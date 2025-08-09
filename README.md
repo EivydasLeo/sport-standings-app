@@ -22,7 +22,6 @@ A sports tournament tracker for football, basketball, and tennis, with features 
 -   **Vite**
 -   **SCSS**
 -   **ESLint + Prettier**
--   Local storage: **`localStorage`**
 
 ---
 

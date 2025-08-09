@@ -2,7 +2,7 @@ export type Option = { value: string; label: string };
 
 export function filterOptions(
     all: Option[],
-    selfPick: string,
+    _selfPick: string,
     otherPick: string,
     hasMatch: (a: string, b: string) => boolean,
 ) {
