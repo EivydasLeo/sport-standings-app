@@ -5,7 +5,7 @@ export interface TeamFormProps {
     placeholder: string;
     inputValue: string;
     buttonLabel?: string;
-    buttonVariant: ButtonProps["variant"];
+    buttonVariant?: ButtonProps["variant"];
     variant?: "football" | "basketball" | "tennis";
     onInputChange: (value: string) => void;
     onSubmit: () => void;

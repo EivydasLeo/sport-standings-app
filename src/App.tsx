@@ -5,6 +5,7 @@ import { SelectShowcase } from "./pages/SelectShowcase";
 import { TableShowcase } from "./pages/TableShowcase";
 import { FootballPage } from "./pages/Football/FootballPage";
 import { TennisPage } from "./pages/Tennis/TennisPage";
+import { BasketballPage } from "./pages/Basketball/BasketballPage";
 
 function App() {
     return (
@@ -40,6 +41,10 @@ function App() {
                                     <Link to="/tennis">Tennis</Link>
                                 </li>
                                 <br />
+                                <li>
+                                    <Link to="/basketball">Basketball</Link>
+                                </li>
+                                <br />
                             </ul>
                         </div>
                     }
@@ -50,6 +55,7 @@ function App() {
                 <Route path="/showcase/tables" element={<TableShowcase />} />
                 <Route path="/football" element={<FootballPage />} />
                 <Route path="/tennis" element={<TennisPage />} />
+                <Route path="/basketball" element={<BasketballPage />} />
             </Routes>
         </Router>
     );
