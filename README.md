@@ -1,6 +1,6 @@
 # Sport Standings App
 
-A lightweight sports tournament tracker for football, basketball, and tennis, with features to add teams/players, enter match results, and display an automatically updated standings table. Data is stored in `localStorage`, so it persists after page reloads.
+A sports tournament tracker for football, basketball, and tennis, with features to add teams/players, enter match results, and display an automatically updated standings table.
 
 ## Features
 
@@ -19,9 +19,9 @@ A lightweight sports tournament tracker for football, basketball, and tennis, wi
 ## Tech Stack
 
 -   **React + TypeScript**
--   **Vite** (dev server / build tool)
--   **SCSS** (styling)
--   **ESLint + Prettier** (linting and formatting)
+-   **Vite**
+-   **SCSS**
+-   **ESLint + Prettier**
 -   Local storage: **`localStorage`**
 
 ---
