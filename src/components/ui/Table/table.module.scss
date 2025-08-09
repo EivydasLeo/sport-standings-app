@@ -1,0 +1,79 @@
+@use "../../../scss/abstracts" as *;
+@use "../../../scss/utils/" as *;
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: rem(8px);
+    overflow: hidden;
+    font-size: rem(14px);
+    text-align: left;
+
+    th,
+    td {
+        padding: rem(12px) rem(16px);
+    }
+}
+
+.football {
+    background-color: $color-white;
+    font-weight: 600;
+
+    thead {
+        background-color: $color-gray;
+        color: $color-black;
+    }
+
+    th,
+    td {
+        border-bottom: 1px solid $color-gray;
+    }
+}
+
+.basketball {
+    background-color: $color-dark-green;
+
+    thead {
+        background-color: $color-dark-green;
+        color: $color-white;
+    }
+
+    tbody {
+        color: $color-white;
+        background-color: $color-black-green;
+    }
+}
+
+.tennis {
+    background-color: $color-white;
+
+    thead {
+        background-color: $color-gray;
+        color: $color-black;
+    }
+
+    th,
+    td {
+        border-bottom: 1px solid $color-gray;
+    }
+}
+
+.cellWithIcon {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(4px);
+
+    @include respond-xs {
+        gap: rem(10px);
+    }
+}
+
+.cellFlex {
+    display: flex;
+    align-items: center;
+    gap: rem(6px);
+}
+
+.flag {
+    width: rem(20px);
+}

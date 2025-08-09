@@ -1,0 +1,23 @@
+@use "../../scss/abstracts/" as *;
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: rem(16px);
+    border-radius: 8px;
+}
+
+.controls {
+    display: flex;
+    gap: rem(16px);
+}
+
+.football {
+    background-color: $color-light-gray;
+    padding: rem(10px) rem(20px);
+}
+
+.basketball {
+    color: $color-white;
+    background-color: $color-dark-green;
+}

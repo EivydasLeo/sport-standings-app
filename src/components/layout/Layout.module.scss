@@ -1,0 +1,35 @@
+@use "../../scss/abstracts/" as *;
+@use "../../scss/utils" as *;
+
+.layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.football {
+    gap: rem(20px);
+    font-family: $font-modern-san-serif;
+    margin: rem(16px);
+}
+
+.basketball {
+    font-family: $font-athletic-style;
+    background-color: $color-dark-green;
+    gap: rem(30px);
+    padding: rem(20px) 0;
+
+    @include respond-xs {
+        padding: rem(20px);
+    }
+}
+
+.tennis {
+    font-family: $font-monospace;
+    gap: rem(30px);
+    margin: rem(20px) 0;
+
+    @include respond-xs {
+        margin: rem(20px);
+    }
+}

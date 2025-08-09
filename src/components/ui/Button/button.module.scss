@@ -1,0 +1,66 @@
+@use "../../../scss/abstracts" as *;
+
+.button {
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 rem(16px);
+    line-height: 1;
+}
+
+.sm {
+    height: rem(32px);
+    font-size: rem(14px);
+}
+
+.md {
+    height: rem(40px);
+    font-size: rem(15px);
+}
+
+.lg {
+    height: rem(48px);
+    font-size: rem(16px);
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.primary {
+    background-color: $color-blue;
+    color: $color-white;
+}
+
+.secondary {
+    background-color: $color-orange;
+    color: $color-white;
+    gap: rem(4px);
+}
+
+.accent {
+    background-color: $color-purple;
+    color: $color-white;
+    gap: rem(10px);
+    font-size: 18px;
+}
+
+.success {
+    background-color: $color-green;
+    color: $color-white;
+    gap: rem(10px);
+    font-size: 18px;
+}
+
+.icon {
+    font-size: rem(28px);
+}
+
+.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+    cursor: not-allowed;
+}

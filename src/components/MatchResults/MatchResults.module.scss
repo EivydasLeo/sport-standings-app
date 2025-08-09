@@ -1,0 +1,26 @@
+@use "../../scss/abstracts/" as *;
+
+.matchResultsWrapper {
+    color: $color-white;
+
+    > *:not(:first-child) {
+        border-top: 1px solid $color-black;
+    }
+}
+
+.matchRow {
+    display: flex;
+    justify-content: space-between;
+    padding: rem(14px) 0;
+}
+
+.teams {
+    display: flex;
+    gap: rem(14px);
+}
+
+.team {
+    display: flex;
+    align-items: center;
+    gap: rem(6px);
+}

@@ -1,0 +1,38 @@
+export const basketballHeaders = ["Team", "W", "L", "D", "Pts"];
+export const footballHeaders = ["Team", "P", "W", "D", "L", "Pts"];
+export const tennisHeader = ["Player", "M", "W", "L", "Pts"];
+export const COUNTRY_CODE_BY_NAME: Record<string, string> = {
+    belgium: "BE",
+    bosniaandherzegovina: "BA",
+    bulgaria: "BG",
+    croatia: "HR",
+    czechrepublic: "CZ",
+    estonia: "EE",
+    finland: "FI",
+    france: "FR",
+    georgia: "GE",
+    germany: "DE",
+    greatbritain: "GB",
+    greece: "GR",
+    hungary: "HU",
+    iceland: "IS",
+    israel: "IL",
+    italy: "IT",
+    latvia: "LV",
+    lithuania: "LT",
+    montenegro: "ME",
+    netherlands: "NL",
+    northmacedonia: "MK",
+    poland: "PL",
+    portugal: "PT",
+    serbia: "RS",
+    slovakia: "SK",
+    slovenia: "SI",
+    spain: "ES",
+    sweden: "SE",
+    switzerland: "CH",
+    turkey: "TR",
+    ukraine: "UA",
+};
+
+export const normalizeName = (name: string) => name.trim().toLowerCase().replace(/\s+/g, "");

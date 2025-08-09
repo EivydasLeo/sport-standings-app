@@ -1,0 +1,7 @@
+@use "./base" as *;
+@use "./abstracts" as *;
+@use "./utils" as *;
+
+.black {
+    font-size: rem(69px);
+}
