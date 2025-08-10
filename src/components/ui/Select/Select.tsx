@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Select.module.scss";
+import styles from "./select.module.scss";
 import { type SelectProps } from "./Select.types";
 
 export const Select: React.FC<SelectProps> = ({

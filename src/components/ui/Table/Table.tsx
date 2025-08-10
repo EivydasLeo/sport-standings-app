@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Table.module.scss";
+import styles from "./table.module.scss";
 import type { TableProps } from "./Table.types";
 import clsx from "clsx";
 import Check from "../../../assets/check.svg";

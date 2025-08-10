@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import styles from "./Input.module.scss";
+import styles from "./input.module.scss";
 import { type InputProps } from "./Input.types";
 
 export const Input: React.FC<InputProps> = ({
