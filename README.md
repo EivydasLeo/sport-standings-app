@@ -1,6 +1,6 @@
 # Sport Standings App
 
-🔗 **Live Demo:** [https://sport-standings-app.vercel.app/](https://sport-standings-app.vercel.app/)
+**Live Demo:** [https://sport-standings-app.vercel.app/](https://sport-standings-app.vercel.app/)
 
 A sports tournament tracker for football, basketball, and tennis, with features to add teams/players, enter match results, and display an automatically updated standings table.
 
