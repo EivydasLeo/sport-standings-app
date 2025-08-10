@@ -1,4 +1,7 @@
+@use "../../scss/abstracts/" as *;
+
 .controls {
     display: flex;
     justify-content: space-between;
+    gap: rem(10px);
 }

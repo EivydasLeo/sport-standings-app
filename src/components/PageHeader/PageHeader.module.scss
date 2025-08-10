@@ -1,12 +1,16 @@
 @use "../../scss/abstracts/" as *;
+@use "../../scss/utils/" as *;
 
 .header {
     display: flex;
     align-items: center;
     padding: rem(16px);
-    border-top-right-radius: rem(8px);
-    border-top-left-radius: rem(8px);
     color: $color-white;
+
+    @include respond-lg {
+        border-top-right-radius: rem(8px);
+        border-top-left-radius: rem(8px);
+    }
 }
 
 .football {
